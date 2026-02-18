@@ -3,6 +3,7 @@ import {
   MimeType,
   CombinePDFJob,
   CombinePDFResult,
+  CombinePDFParams,
 } from "@adobe/pdfservices-node-sdk";
 import { createPDFServices, bufferToStream, streamToBuffer } from "@/lib/adobe";
 
@@ -28,8 +29,11 @@ export async function POST(req: NextRequest) {
         });
       }),
     );
-
-    const job = new CombinePDFJob({ inputAssets });
+    const params = new CombinePDFParams();
+    inputAssets.forEach((asset) => {
+      params.addAsset(asset);
+    });
+    const job = new CombinePDFJob({ params });
     const pollingURL = await pdfServices.submit({ job });
     const result = await pdfServices.getJobResult({
       pollingURL,
