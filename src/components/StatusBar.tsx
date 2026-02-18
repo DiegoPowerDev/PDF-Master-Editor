@@ -1,7 +1,7 @@
 "use client";
 
 interface Props {
-  status: "idle" | "loading" | "success" | "error";
+  status: string;
   message: string;
   downloadUrl?: string;
   downloadName?: string;
