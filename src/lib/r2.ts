@@ -3,12 +3,11 @@ import {
   PutObjectCommand,
   GetObjectCommand,
   DeleteObjectCommand,
-  ChecksumAlgorithm,
 } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { Readable } from "stream";
-
+import type { ReadableStream as WebReadableStream } from "stream/web";
 const BUCKET = process.env.R2_BUCKET_NAME!;
 export const r2 = new S3Client({
   region: "auto",
@@ -24,7 +23,7 @@ export const r2 = new S3Client({
 
 export async function uploadToR2(
   key: string,
-  body: Buffer | Readable,
+  body: Buffer | Readable | Uint8Array | Blob,
   contentType: string,
 ) {
   if (Buffer.isBuffer(body)) {
@@ -104,7 +103,4 @@ export function generateKey(filename: string, prefix = "uploads") {
   const id = crypto.randomUUID();
   const ext = filename.split(".").pop();
   return `${prefix}/${id}.${ext}`;
-}
-export function webStreamToNodeStream(webStream: ReadableStream): Readable {
-  return Readable.fromWeb(webStream as any);
 }
