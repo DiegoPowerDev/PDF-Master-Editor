@@ -7,6 +7,7 @@ import {
   deleteFromR2,
   generateKey,
   getDownloadPresignedUrl,
+  webStreamToNodeStream,
 } from "@/lib/r2";
 import { createPDFServices, bufferToStream } from "@/lib/adobe";
 import {
@@ -155,7 +156,11 @@ export async function POST(req: NextRequest) {
         ? "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         : "application/pdf";
 
-    await uploadToR2(outputKey, readStream, outputContentType);
+    await uploadToR2(
+      outputKey,
+      webStreamToNodeStream(readStream as any),
+      outputContentType,
+    );
 
     // 5. URL firmada de descarga para el cliente (5 min)
     const downloadUrl = await getDownloadPresignedUrl(outputKey, outputName);

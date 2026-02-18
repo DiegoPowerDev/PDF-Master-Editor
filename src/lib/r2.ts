@@ -105,3 +105,6 @@ export function generateKey(filename: string, prefix = "uploads") {
   const ext = filename.split(".").pop();
   return `${prefix}/${id}.${ext}`;
 }
+export function webStreamToNodeStream(webStream: ReadableStream): Readable {
+  return Readable.fromWeb(webStream as any);
+}
