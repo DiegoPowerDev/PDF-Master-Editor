@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   MimeType,
   ExportPDFJob,
+  ExportPDFParams,
   ExportPDFResult,
   ExportPDFTargetFormat,
-  ExportPDFParams,
 } from "@adobe/pdfservices-node-sdk";
 import { createPDFServices, bufferToStream, streamToBuffer } from "@/lib/adobe";
 
@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
       mimeType: MimeType.PDF,
     });
 
+    // El SDK requiere ExportPDFParams separado — no acepta targetFormat directo en el Job
     const params = new ExportPDFParams({
       targetFormat: ExportPDFTargetFormat.DOCX,
     });

@@ -3,51 +3,21 @@
 import { useState } from "react";
 import FileDropzone from "@/components/FileDropzone";
 import StatusBar from "@/components/StatusBar";
+import { usePdfOperation } from "@/hooks/usePdfOperation";
 
 export default function ImageToPdf() {
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string>("");
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-  const [message, setMessage] = useState("");
-  const [downloadUrl, setDownloadUrl] = useState("");
+  const [preview, setPreview] = useState("");
+  const { run, reset, statusBarStatus, statusBarMessage, downloadUrl } =
+    usePdfOperation("image-to-pdf");
 
   const handleFile = (files: File[]) => {
     const f = files[0];
     setFile(f);
-    setStatus("idle");
+    reset();
     const reader = new FileReader();
     reader.onload = (e) => setPreview(e.target?.result as string);
     reader.readAsDataURL(f);
-  };
-
-  const convert = async () => {
-    if (!file) return;
-    setStatus("loading");
-    setMessage("Convirtiendo imagen a PDF con Adobe PDF Services...");
-    setDownloadUrl("");
-
-    try {
-      const form = new FormData();
-      form.append("file", file);
-
-      const res = await fetch("/api/pdf/image-to-pdf", {
-        method: "POST",
-        body: form,
-      });
-      if (!res.ok) throw new Error(await res.text());
-
-      const blob = await res.blob();
-      setDownloadUrl(URL.createObjectURL(blob));
-      setStatus("success");
-      setMessage("¡Imagen convertida a PDF exitosamente!");
-    } catch (err: unknown) {
-      setStatus("error");
-      setMessage(
-        err instanceof Error ? err.message : "Error al convertir la imagen",
-      );
-    }
   };
 
   return (
@@ -55,7 +25,7 @@ export default function ImageToPdf() {
       {!file ? (
         <FileDropzone
           accept=".jpg,.jpeg,.png"
-          hint="Acepta archivos JPG y PNG — máx. 100MB"
+          hint="Acepta JPG y PNG"
           onFiles={handleFile}
         />
       ) : (
@@ -94,7 +64,7 @@ export default function ImageToPdf() {
                   onClick={() => {
                     setFile(null);
                     setPreview("");
-                    setStatus("idle");
+                    reset();
                   }}
                 >
                   ✕
@@ -108,16 +78,16 @@ export default function ImageToPdf() {
       <div className="action-row">
         <button
           className="btn-primary"
-          onClick={convert}
-          disabled={!file || status === "loading"}
+          onClick={() => file && run([file])}
+          disabled={!file || statusBarStatus === "loading"}
         >
-          {status === "loading" ? (
+          {statusBarStatus === "loading" ? (
             <>
               <div
                 className="spinner"
                 style={{ width: 14, height: 14, borderWidth: 2 }}
               />
-              Convirtiendo...
+              {statusBarMessage}
             </>
           ) : (
             "◈ Convertir a PDF"
@@ -129,7 +99,7 @@ export default function ImageToPdf() {
             onClick={() => {
               setFile(null);
               setPreview("");
-              setStatus("idle");
+              reset();
             }}
           >
             Limpiar
@@ -138,8 +108,8 @@ export default function ImageToPdf() {
       </div>
 
       <StatusBar
-        status={status}
-        message={message}
+        status={statusBarStatus}
+        message={statusBarMessage}
         downloadUrl={downloadUrl}
         downloadName={file?.name.replace(/\.(jpg|jpeg|png)$/i, ".pdf")}
       />

@@ -3,57 +3,28 @@
 import { useState } from "react";
 import FileDropzone from "@/components/FileDropzone";
 import StatusBar from "@/components/StatusBar";
+import { usePdfOperation } from "@/hooks/usePdfOperation";
 
 export default function MergePdf() {
   const [files, setFiles] = useState<File[]>([]);
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-  const [message, setMessage] = useState("");
-  const [downloadUrl, setDownloadUrl] = useState("");
+  const { run, reset, statusBarStatus, statusBarMessage, downloadUrl } =
+    usePdfOperation("merge");
 
-  const formatSize = (bytes: number) => `${(bytes / 1024).toFixed(1)} KB`;
+  const formatSize = (b: number) => `${(b / 1024).toFixed(1)} KB`;
 
   const addFiles = (newFiles: File[]) => {
-    setFiles((prev) => [...prev, ...newFiles]);
-    setStatus("idle");
+    setFiles((p) => [...p, ...newFiles]);
+    reset();
   };
-
-  const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const merge = async () => {
-    if (files.length < 2) return;
-    setStatus("loading");
-    setMessage(`Uniendo ${files.length} PDFs con Adobe PDF Services...`);
-    setDownloadUrl("");
-
-    try {
-      const form = new FormData();
-      files.forEach((f) => form.append("files", f));
-
-      const res = await fetch("/api/pdf/merge", { method: "POST", body: form });
-      if (!res.ok) throw new Error(await res.text());
-
-      const blob = await res.blob();
-      setDownloadUrl(URL.createObjectURL(blob));
-      setStatus("success");
-      setMessage(`¡${files.length} PDFs unidos correctamente!`);
-    } catch (err: unknown) {
-      setStatus("error");
-      setMessage(
-        err instanceof Error ? err.message : "Error al unir los archivos",
-      );
-    }
-  };
+  const removeFile = (i: number) =>
+    setFiles((p) => p.filter((_, idx) => idx !== i));
 
   return (
     <div>
       <FileDropzone
         accept=".pdf"
         multiple
-        hint="Selecciona múltiples PDFs — se unirán en el orden de la lista"
+        hint="Selecciona múltiples PDFs"
         onFiles={addFiles}
       />
 
@@ -89,16 +60,16 @@ export default function MergePdf() {
       <div className="action-row">
         <button
           className="btn-primary"
-          onClick={merge}
-          disabled={files.length < 2 || status === "loading"}
+          onClick={() => run(files)}
+          disabled={files.length < 2 || statusBarStatus === "loading"}
         >
-          {status === "loading" ? (
+          {statusBarStatus === "loading" ? (
             <>
               <div
                 className="spinner"
                 style={{ width: 14, height: 14, borderWidth: 2 }}
               />
-              Uniendo...
+              {statusBarMessage}
             </>
           ) : (
             `⊕ Unir ${files.length} PDFs`
@@ -109,7 +80,7 @@ export default function MergePdf() {
             className="btn-secondary"
             onClick={() => {
               setFiles([]);
-              setStatus("idle");
+              reset();
             }}
           >
             Limpiar todo
@@ -117,7 +88,7 @@ export default function MergePdf() {
         )}
       </div>
 
-      {files.length < 2 && files.length > 0 && (
+      {files.length === 1 && (
         <p
           style={{
             fontSize: 12,
@@ -126,13 +97,13 @@ export default function MergePdf() {
             fontFamily: "var(--font-mono)",
           }}
         >
-          Añade al menos 2 PDFs para poder unirlos.
+          Añade al menos 2 PDFs.
         </p>
       )}
 
       <StatusBar
-        status={status}
-        message={message}
+        status={statusBarStatus}
+        message={statusBarMessage}
         downloadUrl={downloadUrl}
         downloadName="merged.pdf"
       />
