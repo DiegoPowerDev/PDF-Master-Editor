@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     });
     const outputBuffer = await streamToBuffer(streamAsset.readStream);
 
-    return new NextResponse(outputBuffer, {
+    return new NextResponse(new Uint8Array(outputBuffer), {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": 'attachment; filename="merged.pdf"',

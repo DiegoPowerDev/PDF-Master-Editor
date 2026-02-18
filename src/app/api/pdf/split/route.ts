@@ -46,11 +46,14 @@ export async function POST(req: NextRequest) {
     });
 
     // SplitPDF returns an array of assets; take the first one
-    const assets = result.result!.assets;
+    const assets = result.result!.assets || [];
+    if (assets.length === 0) {
+      throw new Error("No se generaron assets de salida");
+    }
     const streamAsset = await pdfServices.getContent({ asset: assets[0] });
     const outputBuffer = await streamToBuffer(streamAsset.readStream);
 
-    return new NextResponse(outputBuffer, {
+    return new NextResponse(new Uint8Array(outputBuffer), {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": 'attachment; filename="extracted.pdf"',
