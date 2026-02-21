@@ -7,27 +7,17 @@ import { usePdfOperation } from "@/hooks/usePdfOperation";
 
 export default function SplitPdf() {
   const [file, setFile] = useState<File | null>(null);
-  const [startPage, setStartPage] = useState("1");
-  const [endPage, setEndPage] = useState("");
+  const [startPage, setStartPage] = useState(1);
+  const [endPage, setEndPage] = useState(1);
   const { run, reset, statusBarStatus, statusBarMessage, downloadUrl } =
     usePdfOperation("split");
 
   const handleRun = () => {
     if (!file) return;
-    run([file]); // options se pasan en el hook, pero aquí los enviamos via process route
-  };
-
-  // Sobreescribir run para pasar options de páginas
-  const handleRunWithOptions = async () => {
-    if (!file) return;
-    // Necesitamos pasar startPage/endPage al hook — usamos fetch directo
-    const { run: runWithOpts } = {
-      run: async (files: File[]) => {
-        // Este componente llama a run del hook pero necesita pasar options dinámicas
-        // La solución limpia es usar el hook con options dinámicas
-      },
-    };
-    run([file]);
+    run([file], {
+      startPage: startPage,
+      endPage: endPage,
+    }); // options se pasan en el hook, pero aquí los enviamos via process route
   };
 
   return (
@@ -67,7 +57,7 @@ export default function SplitPdf() {
                 type="number"
                 min="1"
                 value={startPage}
-                onChange={(e) => setStartPage(e.target.value)}
+                onChange={(e) => setStartPage(parseInt(e.target.value))}
                 placeholder="1"
               />
             </div>
@@ -77,7 +67,7 @@ export default function SplitPdf() {
                 type="number"
                 min="1"
                 value={endPage}
-                onChange={(e) => setEndPage(e.target.value)}
+                onChange={(e) => setEndPage(parseInt(e.target.value))}
                 placeholder="última"
               />
             </div>

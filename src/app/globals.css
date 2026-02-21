@@ -1,11 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap");
+@import "tailwindcss";
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+::selection {
+  background-color: #faea08; /* Un verde accesible (green-600) */
+  color: white; /* Color del texto al estar seleccionado */
+}
+
+/* Para navegadores basados en Firefox antiguo (opcional) */
+::-moz-selection {
+  background-color: #faea08;
+  color: white;
+}
+
+.docx {
+  overflow: visible;
+  scale: 0.5;
+}
+.docx-wrapper {
+  background-color: white;
+  max-height: 800px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
 }
 
 :root {
@@ -363,16 +378,6 @@ body {
   background: color-mix(in srgb, var(--error) 8%, var(--bg2));
   border: 1px solid color-mix(in srgb, var(--error) 25%, transparent);
   color: var(--error);
-}
-
-.spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid currentColor;
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  flex-shrink: 0;
 }
 
 @keyframes spin {

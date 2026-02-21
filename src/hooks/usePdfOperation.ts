@@ -4,15 +4,16 @@ import { useState } from "react";
 
 type Step =
   | ""
-  | "Subiendo a R2..."
-  | "Procesando con Adobe..."
-  | "Guardando resultado..."
-  | "Listo";
+  | "Preparando archivo..."
+  | "Convirtiendo archivo..."
+  | "Preparando descarga..."
+  | "¡Listo! Tu archivo está disponible para descargar por 5 minutos."
+  | "Error desconocido";
 
 export function usePdfOperation(operation: string) {
   const [status, setStatus] = useState<string>("idle");
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<Step>("");
   const [downloadUrl, setDownloadUrl] = useState("");
   const [outputKey, setOutputKey] = useState("");
   const run = async (files: File[], options?: Record<string, unknown>) => {
@@ -21,7 +22,7 @@ export function usePdfOperation(operation: string) {
       setStatus("loading");
 
       // Paso 1: pedir URLs firmadas de subida a R2
-      setMessage("Preparando subida...");
+      setMessage("Preparando archivo...");
       const presigns = await Promise.all(
         files.map((f) =>
           fetch("/api/r2/presign-upload", {
@@ -38,9 +39,7 @@ export function usePdfOperation(operation: string) {
       );
 
       // Paso 2: subir DIRECTO a R2 desde el cliente
-      setMessage(
-        `Subiendo ${files.length > 1 ? files.length + " archivos" : '"' + files[0].name + '"'} a R2...`,
-      );
+      setMessage(`Convirtiendo archivo...`);
       await Promise.all(
         files.map((file, i) => {
           console.log("[r2] PUT a:", presigns[i].uploadUrl);
@@ -60,7 +59,6 @@ export function usePdfOperation(operation: string) {
       );
 
       // Paso 3: Vercel procesa con Adobe
-      setMessage("Procesando con Adobe PDF Services...");
       const res = await fetch("/api/r2/process", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -80,7 +78,9 @@ export function usePdfOperation(operation: string) {
       setOutputKey(data.outputKey);
       setDownloadUrl(data.downloadUrl);
       setStatus("success");
-      setMessage("¡Listo! Tu archivo está disponible por 5 minutos.");
+      setMessage(
+        "¡Listo! Tu archivo está disponible para descargar por 5 minutos.",
+      );
     } catch (err) {
       console.error("[usePdfOperation] error:", err);
       setStatus("error");

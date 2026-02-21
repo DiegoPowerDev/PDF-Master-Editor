@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
 
 interface Props {
@@ -24,8 +25,12 @@ export default function FileDropzone({
   };
 
   return (
-    <div
-      className={`dropzone ${dragOver ? "drag-over" : ""}`}
+    <label
+      htmlFor="dropzone"
+      className={cn(
+        dragOver && "drag-over",
+        `h-3/4 w-3/4 cursor-pointer transition-all duration-200 border-dashed border-2 rounded-xl flex items-center justify-center flex-col bg-[#0C0C0E] hover:bg-[#1d1d25] p-8 font-bold`,
+      )}
       onDragOver={(e) => {
         e.preventDefault();
         setDragOver(true);
@@ -36,9 +41,10 @@ export default function FileDropzone({
         setDragOver(false);
         handle(e.dataTransfer.files);
       }}
-      onClick={() => inputRef.current?.click()}
     >
       <input
+        className="hidden"
+        id="dropzone"
         ref={inputRef}
         type="file"
         accept={accept}
@@ -46,11 +52,13 @@ export default function FileDropzone({
         onChange={(e) => handle(e.target.files)}
         onClick={(e) => e.stopPropagation()}
       />
-      <span className="dropzone-icon">⬆</span>
       <p className="dropzone-title">
-        Arrastra tu archivo aquí o haz clic para seleccionar
+        Arrastra tu archivo
+        <span className="font-bold px-2 text-yellow-300">
+          {accept.toUpperCase()}
+        </span>
+        aquí o haz clic para seleccionar
       </p>
-      <p className="dropzone-hint">{hint || accept}</p>
-    </div>
+    </label>
   );
 }

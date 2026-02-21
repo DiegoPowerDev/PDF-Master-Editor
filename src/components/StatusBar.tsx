@@ -1,5 +1,8 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import { Check, X } from "lucide-react";
+
 interface Props {
   status: string;
   message: string;
@@ -7,31 +10,46 @@ interface Props {
   downloadName?: string;
 }
 
-export default function StatusBar({
-  status,
-  message,
-  downloadUrl,
-  downloadName,
-}: Props) {
+export default function StatusBar({ status, message }: Props) {
   if (status === "idle") return null;
+
+  const color: Record<string, string> = {
+    loading: "#e8ff47",
+    success: "#4ade80",
+    error: "#f87171",
+  };
 
   return (
     <div>
-      <div className={`status-bar ${status}`}>
-        {status === "loading" && <div className="spinner" />}
-        {status === "success" && <span>✓</span>}
-        {status === "error" && <span>✗</span>}
-        <span>{message}</span>
-      </div>
-      {status === "success" && downloadUrl && (
-        <a
-          className="download-btn"
-          href={downloadUrl}
-          download={downloadName || "output"}
+      <div
+        className={cn(
+          ` rounded-xl p-4 flex flex-col items-center justify-center gap-2`,
+        )}
+      >
+        {status === "loading" && (
+          <div
+            className={`w-40 h-40 border-8 border-[#e8ff4720] border-t-[#e8ff47] rounded-full animate-spin`}
+          />
+        )}
+        {status === "success" && (
+          <span>
+            <Check color="#4ade80" size={100} />
+          </span>
+        )}
+        {status === "error" && (
+          <span>
+            <X color="#f87171" size={100} />
+          </span>
+        )}
+        <span
+          style={{
+            color: color[status],
+          }}
+          className="p-4 rounded-xl text-center"
         >
-          ↓ Descargar archivo
-        </a>
-      )}
+          {message}
+        </span>
+      </div>
     </div>
   );
 }

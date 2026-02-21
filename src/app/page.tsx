@@ -4,9 +4,18 @@ import { useState } from "react";
 import WordToPdf from "@/components/tools/WordToPdf";
 import PdfToWord from "@/components/tools/PdfToWord";
 import MergePdf from "@/components/tools/MergePdf";
-import SplitPdf from "@/components/tools/SplitPdf";
 import ImageToPdf from "@/components/tools/ImageToPdf";
+import dynamic from "next/dynamic";
 
+const SplitPdf = dynamic(() => import("@/components/tools/SplitPdf"), {
+  ssr: false, // Esta es la línea mágica
+  loading: () => (
+    <div className="flex flex-col items-center p-20">
+      <div className="spinner" />
+      <p>Iniciando motor de PDF...</p>
+    </div>
+  ),
+});
 const tools = [
   {
     id: "word-to-pdf",
@@ -58,7 +67,7 @@ export default function Home() {
             PDF<em>Studio</em>
           </span>
         </div>
-        <nav className="tool-nav">
+        <nav className="tool-nav flex flex-col justify-center">
           {tools.map((tool) => (
             <button
               key={tool.id}
@@ -73,9 +82,6 @@ export default function Home() {
             </button>
           ))}
         </nav>
-        <div className="sidebar-footer">
-          <p>Powered by Adobe PDF Services</p>
-        </div>
       </aside>
 
       <section className="workspace">
