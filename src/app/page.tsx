@@ -8,7 +8,9 @@ import ImageToPdf from "@/components/tools/ImageToPdf";
 import SplitPdf from "@/components/tools/SplitPdf";
 import dynamic from "next/dynamic";
 import {
+  IconArrowDown,
   IconArrowRight,
+  IconChevronDown,
   IconFileTypeDoc,
   IconFileTypePdf,
   IconPdf,
@@ -74,11 +76,12 @@ const tools = [
 export default function Home() {
   const [activeTool, setActiveTool] = useState(tools[0]);
   const ActiveComponent = activeTool.component;
+  const [openMenu, setOpenMenu] = useState(true);
 
   return (
-    <main className="flex h-full w-full">
-      <aside className="bg-[#141417] flex flex-col w-1/4 gap-2 py-12 px-2">
-        <div className="flex gap-2">
+    <main className="flex flex-col md:flex-row h-full w-full">
+      <aside className="bg-[#141417] flex flex-col w-full md:w-1/4 gap-2 pt-8 pb-2 md:py-12 px-2">
+        <div className="flex gap-2 justify-center md:justify-start">
           <span className="text-amber-300 ">
             <IconFileTypePdf size={60} />
           </span>
@@ -90,7 +93,12 @@ export default function Home() {
             </span>
           </span>
         </div>
-        <nav className="items-center h-full flex flex-col justify-center gap-2">
+        <nav
+          className={cn(
+            openMenu ? "flex flex-col" : "hidden",
+            "items-center h-full  justify-center gap-2",
+          )}
+        >
           {tools.map((tool) => (
             <button
               key={tool.id}
@@ -112,6 +120,12 @@ export default function Home() {
             </button>
           ))}
         </nav>
+        <div
+          className="w-full flex justify-center"
+          onClick={() => setOpenMenu(!openMenu)}
+        >
+          <IconChevronDown />
+        </div>
       </aside>
 
       <section className="flex w-full h-full flex-col">

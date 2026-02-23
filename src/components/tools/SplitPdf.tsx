@@ -167,7 +167,7 @@ export default function SplitPdf() {
           </div>
         </div>
       ) : (
-        <div className="w-[400px] h-[400px] flex items-center justify-center">
+        <div className=" flex items-center justify-center">
           <FileDropzone
             accept=".pdf"
             type="cortar"

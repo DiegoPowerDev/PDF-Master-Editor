@@ -25,7 +25,7 @@ export default function ImageToPdf() {
   return (
     <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center ">
       {!file ? (
-        <div className="w-[400px] h-[400px] flex items-center justify-center">
+        <div className=" flex items-center justify-center">
           <FileDropzone
             type="imagen"
             accept=".jpg,.jpeg,.png"

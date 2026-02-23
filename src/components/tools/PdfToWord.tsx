@@ -23,8 +23,8 @@ export default function PdfToWord() {
       {file ? (
         <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
           <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
-            <div className="w-full h-full flex justify-center items-end">
-              <Pdf width={150} height={150} />
+            <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
+              <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36" />
             </div>
             <div className="h-full flex flex-col w-full  items-center">
               <div className="cursor pointer flex   p-4 justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   px-8 rounded-xl text-center gap-2 font-bold text-sm">
@@ -57,8 +57,8 @@ export default function PdfToWord() {
           <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
             {statusBarStatus === "success" && (
               <>
-                <div className="h-full flex  justify-center items-end">
-                  <Doc width={150} height={150} />
+                <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
+                  <Doc className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36" />
                 </div>
                 <div className="h-full flex flex-col w-full  items-center">
                   <a
@@ -77,7 +77,7 @@ export default function PdfToWord() {
           </div>
         </div>
       ) : (
-        <div className="w-[400px] h-[400px] flex items-center justify-center">
+        <div className=" flex items-center justify-center">
           <FileDropzone
             type="word"
             accept=".pdf"

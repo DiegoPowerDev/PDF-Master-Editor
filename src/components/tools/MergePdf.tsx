@@ -121,8 +121,8 @@ export default function MergePdf() {
             <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
               {statusBarStatus === "success" && (
                 <>
-                  <div className="h-full flex  justify-center items-end">
-                    <Pdf width={150} height={150} />
+                  <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
+                    <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36" />
                   </div>
                   <div className="h-full flex flex-col w-full  items-center">
                     <a
@@ -142,7 +142,7 @@ export default function MergePdf() {
           </div>
         </>
       ) : (
-        <div className="w-[400px] h-[400px] flex items-center justify-center">
+        <div className=" flex items-center justify-center">
           <FileDropzone
             accept=".pdf"
             multiple

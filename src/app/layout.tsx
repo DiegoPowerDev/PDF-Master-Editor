@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "PDF Studio — Adobe PDF Services",
-  description:
-    "Convierte, une, divide y transforma documentos PDF con Adobe PDF Services",
+  title: "Fast PDF",
+  description: "Convierte, une, divide y transforma documentos PDF",
 };
 
 export default function RootLayout({

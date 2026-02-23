@@ -69,7 +69,7 @@ export default function FileDropzone({
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 w-full h-full">
+    <div className="flex flex-col items-center justify-center h-[400px] w-[400px] gap-2 ">
       <label
         htmlFor="dropzone"
         className={cn(

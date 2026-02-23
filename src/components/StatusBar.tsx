@@ -22,7 +22,7 @@ export default function StatusBar({ status, message }: Props) {
   return (
     <div
       className={cn(
-        ` rounded-xl p-4 flex flex-col items-center justify-center gap-2`,
+        ` rounded-xl p-4 flex md:flex-col items-center justify-center gap-2`,
       )}
     >
       {status === "loading" && (
@@ -32,7 +32,7 @@ export default function StatusBar({ status, message }: Props) {
       )}
       {status === "success" && (
         <span>
-          <Check color="#4ade80" size={100} />
+          <Check className="text-[#4ade80] w-8 h-8 md:w-24 md:h-24 lg:w-36 lg:h-36" />
         </span>
       )}
       {status === "error" && (
