@@ -8,7 +8,8 @@ type Step =
   | "Convirtiendo..."
   | "Preparando descarga..."
   | "¡Listo! Tu archivo está disponible para descargar por 5 minutos."
-  | "Error desconocido";
+  | "Error desconocido"
+  | "Un archivo seleccionado se encuentra dañado o no es un PDF válido.";
 
 export function usePdfOperation(operation: string) {
   const [status, setStatus] = useState<string>("idle");
@@ -39,7 +40,7 @@ export function usePdfOperation(operation: string) {
       );
 
       // Paso 2: subir DIRECTO a R2 desde el cliente
-      setMessage(`Convirtiendo archivo...`);
+      setMessage(`Convirtiendo...`);
       await Promise.all(
         files.map((file, i) => {
           console.log("[r2] PUT a:", presigns[i].uploadUrl);
@@ -84,7 +85,9 @@ export function usePdfOperation(operation: string) {
     } catch (err) {
       console.error("[usePdfOperation] error:", err);
       setStatus("error");
-      setMessage(err instanceof Error ? err.message : "Error desconocido");
+      setMessage(
+        "Un archivo seleccionado se encuentra dañado o no es un PDF válido.",
+      );
     }
   };
 

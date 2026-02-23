@@ -7,14 +7,14 @@ interface Props {
   accept: string;
   multiple?: boolean;
   onFiles: (files: File[]) => void;
-  hint?: string;
+  type?: string;
 }
 
 export default function FileDropzone({
   accept,
   multiple = false,
   onFiles,
-  hint,
+  type,
 }: Props) {
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,7 +29,8 @@ export default function FileDropzone({
       htmlFor="dropzone"
       className={cn(
         dragOver && "drag-over",
-        `h-3/4 w-3/4 cursor-pointer transition-all duration-200 border-dashed border-2 rounded-xl flex items-center justify-center flex-col bg-[#0C0C0E] hover:bg-[#1d1d25] p-8 font-bold`,
+        type != "unir" && "h-3/4 w-3/4 p-8",
+        ` cursor-pointer transition-all duration-200 border-dashed border-2 rounded-xl flex items-center justify-center flex-col bg-[#0C0C0E] hover:bg-[#1d1d25]  font-bold p-4`,
       )}
       onDragOver={(e) => {
         e.preventDefault();

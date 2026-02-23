@@ -19,7 +19,7 @@ export default function PdfToWord() {
       : `${(b / 1048576).toFixed(1)} MB`;
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center">
+    <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center">
       {file ? (
         <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
           <div className="grid grid-cols-1 grid-rows-[2fr_1fr] items-center justify-center h-full p-4 gap-2">
