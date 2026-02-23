@@ -33,18 +33,17 @@ export default function WordToPdf() {
         </div>
       ) : (
         <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
-          <div className="flex flex-col items-center justify-center gap-8">
+          <div className="flex flex-col w-full items-center justify-center gap-2">
             <Doc width={150} height={150} />
-            <div className="file-item">
-              <span className="file-item-icon">📑</span>
-              <div className="file-item-info">
-                <div className="file-item-name">
-                  Archivo cargado: {file.name}
-                </div>
-                <div className="file-item-size">{formatSize(file.size)}</div>
-              </div>
+
+            <div className="font-bold text-sm text-center ">
+              Archivo cargado:
+            </div>
+            <div className="cursor pointer flex flex-col w-11/12 justify-center items-center text-black bg-[#4ade80] p-2 px-8 rounded-xl text-center gap-2 font-bold text-sm relative">
+              <div>{file.name}</div>
+              <div className="text-gray-700">{formatSize(file.size)}</div>
               <button
-                className="file-item-remove"
+                className="absolute top-2 right-2 text-red-800"
                 onClick={() => {
                   setFile(null);
                   reset();

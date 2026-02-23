@@ -4,10 +4,10 @@ import { useState } from "react";
 import FileDropzone from "@/components/FileDropzone";
 import StatusBar from "@/components/StatusBar";
 import { usePdfOperation } from "@/hooks/usePdfOperation";
-import dynamic from "next/dynamic";
-const PdfViewer = dynamic(() => import("@/components/PdfViewer"), {
-  ssr: false,
-});
+import Doc from "@/assets/doc.svg";
+import Pdf from "@/assets/pdf.svg";
+import { ArrowRight, Download } from "lucide-react";
+
 export default function PdfToWord() {
   const [file, setFile] = useState<File | null>(null);
   const { run, reset, statusBarStatus, statusBarMessage, downloadUrl } =
@@ -21,24 +21,18 @@ export default function PdfToWord() {
   return (
     <div className="h-full w-full flex flex-col items-center justify-center">
       {file ? (
-        <div className="h-full w-full grid grid-cols-2 gap-2 items-center justify-center">
-          <div className="flex flex-col p-4 gap-2">
-            <StatusBar
-              status={statusBarStatus}
-              message={statusBarMessage}
-              downloadUrl={downloadUrl}
-              downloadName={file?.name.replace(".pdf", ".docx")}
-            />
-            <div className="file-item">
-              <span className="file-item-icon">📑</span>
-              <div className="file-item-info">
-                <div className="file-item-name">
-                  Archivo cargado: {file.name}
-                </div>
-                <div className="file-item-size">{formatSize(file.size)}</div>
-              </div>
+        <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
+          <div className="flex flex-col items-center justify-center gap-2">
+            <Pdf width={150} height={150} />
+
+            <div className="font-bold text-sm text-center ">
+              Archivo cargado:
+            </div>
+            <div className="cursor pointer flex flex-col w-11/12 justify-center items-center text-black bg-[#4ade80] p-2 px-8 rounded-xl text-center gap-2 font-bold text-sm relative">
+              <div>{file.name}</div>
+              <div className="text-gray-700">{formatSize(file.size)}</div>
               <button
-                className="file-item-remove"
+                className="absolute top-2 right-2 text-red-800"
                 onClick={() => {
                   setFile(null);
                   reset();
@@ -47,36 +41,33 @@ export default function PdfToWord() {
                 ✕
               </button>
             </div>
-            <div className="flex gap-2 justify-center items-center">
+          </div>
+          <div className="flex flex-col items-center justify-center h-full p-4 gap-2">
+            <StatusBar status={statusBarStatus} message={statusBarMessage} />
+            {statusBarMessage === "" && (
               <button
                 className="btn-primary"
                 onClick={() => file && run([file])}
                 disabled={!file || statusBarStatus === "loading"}
               >
-                {statusBarStatus === "loading" ? (
-                  <>
-                    <div
-                      className="spinner"
-                      style={{ width: 14, height: 14, borderWidth: 2 }}
-                    />
-                    {statusBarMessage}
-                  </>
-                ) : (
-                  "⬆ Exportar a Word"
-                )}
+                Convertir a PDF <ArrowRight />
               </button>
-              {file && (
-                <button
-                  className="btn-secondary"
-                  onClick={() => {
-                    setFile(null);
-                    reset();
-                  }}
+            )}
+          </div>
+          <div className="flex flex-col items-center justify-center gap-8">
+            {statusBarStatus === "success" && (
+              <>
+                <Doc width={150} height={150} />
+                <a
+                  className="cursor pointer flex justify-center items-center text-black bg-[#4ade80] p-2 px-4 rounded-xl text-center gap-2 font-bold text-sm"
+                  href={downloadUrl}
+                  download={file?.name.replace(/\.docx?$/, ".pdf") || "output"}
                 >
-                  Limpiar
-                </button>
-              )}
-            </div>
+                  <Download /> Descargar
+                  {file?.name.replace(/\.docx?$/, ".pdf")}
+                </a>
+              </>
+            )}
           </div>
         </div>
       ) : (

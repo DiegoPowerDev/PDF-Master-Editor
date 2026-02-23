@@ -52,7 +52,7 @@ export default function FileDropzone({
         onChange={(e) => handle(e.target.files)}
         onClick={(e) => e.stopPropagation()}
       />
-      <p className="dropzone-title">
+      <p className="dropzone-title text-center">
         Arrastra tu archivo
         <span className="font-bold px-2 text-yellow-300">
           {accept.toUpperCase()}
