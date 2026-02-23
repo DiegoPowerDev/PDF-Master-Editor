@@ -23,8 +23,8 @@ export default function WordToPdf() {
       {!file ? (
         <div className="w-[400px] h-[400px] flex items-center justify-center">
           <FileDropzone
+            type="pdf"
             accept=".docx,.doc"
-            hint="Acepta .docx y .doc — sube directo a Adobe, sin límite de Vercel"
             onFiles={(files) => {
               setFile(files[0]);
               reset();
@@ -33,8 +33,8 @@ export default function WordToPdf() {
         </div>
       ) : (
         <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
-          <div className="grid grid-cols-1 grid-rows-[2fr_1fr] items-center justify-center h-full p-4 gap-2">
-            <div className="w-full h-full flex justify-center items-center">
+          <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
+            <div className="w-full h-full flex justify-center items-end">
               <Doc width={150} height={150} />
             </div>
 
@@ -54,11 +54,11 @@ export default function WordToPdf() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center h-full p-4 gap-2">
+          <div className="flex flex-col items-center justify-center h-full p-4 gap-2 pb-20">
             <StatusBar status={statusBarStatus} message={statusBarMessage} />
             {statusBarMessage === "" && (
               <button
-                className="btn-primary"
+                className="p-4  bg-amber-300 text-black font-bold rounded-xl  hover:bg-amber-200 hover:-translate-y-0.5 duration-200 flex  items-center justify-center text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                 onClick={() => file && run([file])}
                 disabled={!file || statusBarStatus === "loading"}
               >
@@ -66,10 +66,10 @@ export default function WordToPdf() {
               </button>
             )}
           </div>
-          <div className="grid grid-cols-1 grid-rows-[2fr_1fr] items-center justify-center h-full p-4 gap-2">
+          <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
             {statusBarStatus === "success" && (
               <>
-                <div className="h-full flex items-center justify-center">
+                <div className="h-full flex  justify-center items-end">
                   <Pdf width={150} height={150} />
                 </div>
                 <div className="h-full flex flex-col w-full  items-center">

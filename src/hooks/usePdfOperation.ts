@@ -74,7 +74,7 @@ export function usePdfOperation(operation: string) {
       const data = await res.json();
       if (!res.ok || data.error)
         throw new Error(data.error || "Error desconocido");
-
+      console.log(data);
       // Paso 4: URL firmada de descarga desde R2
       setOutputKey(data.outputKey);
       setDownloadUrl(data.downloadUrl);
@@ -100,7 +100,23 @@ export function usePdfOperation(operation: string) {
       }).catch(() => {});
     }
   };
-
+  const downloadAs = async (filename: string) => {
+    if (!downloadUrl) return;
+    try {
+      const res = await fetch(downloadUrl);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error("Error al descargar:", err);
+    }
+  };
   const reset = () => {
     setStatus("idle");
     setMessage("");
@@ -117,5 +133,13 @@ export function usePdfOperation(operation: string) {
         ? message
         : message;
 
-  return { run, reset, status, statusBarStatus, statusBarMessage, downloadUrl };
+  return {
+    run,
+    reset,
+    status,
+    statusBarStatus,
+    statusBarMessage,
+    downloadUrl,
+    downloadAs,
+  };
 }

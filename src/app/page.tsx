@@ -5,51 +5,68 @@ import WordToPdf from "@/components/tools/WordToPdf";
 import PdfToWord from "@/components/tools/PdfToWord";
 import MergePdf from "@/components/tools/MergePdf";
 import ImageToPdf from "@/components/tools/ImageToPdf";
+import SplitPdf from "@/components/tools/SplitPdf";
 import dynamic from "next/dynamic";
+import {
+  IconArrowRight,
+  IconFileTypeDoc,
+  IconFileTypePdf,
+  IconPdf,
+  IconPhoto,
+  IconPlus,
+  IconScissors,
+} from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 
-const SplitPdf = dynamic(() => import("@/components/tools/SplitPdf"), {
-  ssr: false, // Esta es la línea mágica
-  loading: () => (
-    <div className="flex flex-col items-center p-20">
-      <div className="spinner" />
-      <p>Iniciando motor de PDF...</p>
-    </div>
-  ),
-});
 const tools = [
   {
     id: "word-to-pdf",
-    label: "Word → PDF",
-    icon: "⬇",
-    desc: "Convierte documentos DOCX a PDF con fidelidad perfecta",
+    label: (
+      <span className="flex  items-center gap-2">
+        Word
+        <IconArrowRight size={15} /> PDF
+      </span>
+    ),
+    icon: <IconFileTypeDoc />,
+    desc: "Convierte documentos DOCX a PDF ",
     component: WordToPdf,
   },
   {
     id: "pdf-to-word",
-    label: "PDF → Word",
-    icon: "⬆",
-    desc: "Exporta PDF a DOCX editable",
+    label: (
+      <span className="flex  items-center gap-2">
+        PDF
+        <IconArrowRight size={15} /> Word
+      </span>
+    ),
+    icon: <IconFileTypePdf />,
+    desc: "Convierte PDFs a DOCX editables",
     component: PdfToWord,
   },
   {
     id: "merge",
     label: "Unir PDFs",
-    icon: "⊕",
+    icon: <IconPlus />,
     desc: "Combina múltiples PDFs en uno solo",
     component: MergePdf,
   },
   {
     id: "split",
     label: "Dividir PDF",
-    icon: "⊘",
+    icon: <IconScissors />,
     desc: "Extrae páginas o rangos de un PDF",
     component: SplitPdf,
   },
   {
     id: "image-to-pdf",
-    label: "Imagen → PDF",
-    icon: "◈",
-    desc: "Convierte JPG o PNG a documento PDF",
+    label: (
+      <span className="flex  items-center gap-2">
+        Imagen
+        <IconArrowRight size={15} /> PDF
+      </span>
+    ),
+    icon: <IconPhoto />,
+    desc: "Convierte imágenes a documento PDF",
     component: ImageToPdf,
   },
 ];
@@ -59,37 +76,52 @@ export default function Home() {
   const ActiveComponent = activeTool.component;
 
   return (
-    <main className="app-shell">
-      <aside className="sidebar">
-        <div className="brand">
-          <span className="brand-icon">◉</span>
-          <span className="brand-name">
-            PDF<em>Studio</em>
+    <main className="flex h-full w-full">
+      <aside className="bg-[#141417] flex flex-col w-1/4 gap-2 py-12 px-2">
+        <div className="flex gap-2">
+          <span className="text-amber-300 ">
+            <IconFileTypePdf size={60} />
+          </span>
+          <span className="font-bold text-2xl">
+            Fast
+            <span className="px-2 text-amber-300">
+              PDF
+              <br /> Conversor
+            </span>
           </span>
         </div>
-        <nav className="tool-nav flex flex-col justify-center">
+        <nav className="items-center h-full flex flex-col justify-center gap-2">
           {tools.map((tool) => (
             <button
               key={tool.id}
-              className={`tool-btn ${activeTool.id === tool.id ? "active" : ""}`}
+              className={cn(
+                activeTool.id === tool.id
+                  ? "bg-amber-300 text-black "
+                  : "text-white",
+                "rounded-xl w-full cursor-pointer flex py-2 px-4 items-center text-start gap-4 text-sm ",
+              )}
               onClick={() => setActiveTool(tool)}
             >
-              <span className="tool-icon">{tool.icon}</span>
-              <span className="tool-info">
-                <span className="tool-label">{tool.label}</span>
-                <span className="tool-desc">{tool.desc}</span>
+              <span className=" flex flex-col justify-center h-full ">
+                {tool.icon}
+              </span>
+              <span className="flex flex-col">
+                <span className="font-bold">{tool.label}</span>
+                <span className="opacity-80">{tool.desc}</span>
               </span>
             </button>
           ))}
         </nav>
       </aside>
 
-      <section className="workspace">
-        <header className="workspace-header">
-          <h1>{activeTool.label}</h1>
-          <p>{activeTool.desc}</p>
+      <section className="flex w-full h-full flex-col">
+        <header className="border-b border-white/20 p-4">
+          <h1 className="font-bold text-amber-300 text-2xl">
+            {activeTool.label}
+          </h1>
+          <p className="text-white/50">{activeTool.desc}</p>
         </header>
-        <div className="justify-center flex items-center p-12 flex-1 ">
+        <div className="justify-center flex items-center   h-full ">
           <ActiveComponent />
         </div>
       </section>

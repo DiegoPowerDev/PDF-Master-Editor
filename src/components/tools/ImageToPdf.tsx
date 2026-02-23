@@ -23,24 +23,24 @@ export default function ImageToPdf() {
   };
 
   return (
-    <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center">
+    <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center ">
       {!file ? (
         <div className="w-[400px] h-[400px] flex items-center justify-center">
           <FileDropzone
+            type="imagen"
             accept=".jpg,.jpeg,.png"
-            hint="Acepta JPG y PNG"
             onFiles={handleFile}
           />
         </div>
       ) : (
-        <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
-          <div className="grid grid-cols-1 grid-rows-[2fr_1fr] items-center justify-center h-full p-4 gap-2">
+        <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center ">
+          <div className="grid flex flex-col items-center justify-center   p-4 gap-4 ">
             {preview && (
-              <div className="w-full h-full flex justify-center items-center">
+              <div className="w-full   flex justify-center items-end ">
                 <img
                   src={preview}
                   alt="Imagen a convertir a PDF"
-                  className="max-w-full object-contain "
+                  className="max-w-full object-contain border rounded-xl"
                 />
               </div>
             )}
@@ -70,17 +70,17 @@ export default function ImageToPdf() {
 
             {statusBarStatus === "idle" && (
               <button
-                className="btn-primary"
+                className="p-4  bg-amber-300 text-black font-bold rounded-xl  hover:bg-amber-200 hover:-translate-y-0.5 duration-200 flex  items-center justify-center text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                 onClick={() => file && run([file])}
               >
                 Convertir a PDF <ArrowRight />
               </button>
             )}
           </div>
-          <div className="grid grid-cols-1 grid-rows-[2fr_1fr] items-center justify-center h-full p-4 gap-2">
+          <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12  pt-20">
             {statusBarStatus === "success" && (
               <>
-                <div className="h-full flex items-center justify-center">
+                <div className="h-full flex  justify-center items-end">
                   <Pdf width={150} height={150} />
                 </div>
                 <div className="h-full flex flex-col w-full  items-center">
@@ -102,8 +102,6 @@ export default function ImageToPdf() {
           </div>
         </div>
       )}
-
-      <div className="action-row"></div>
     </div>
   );
 }
