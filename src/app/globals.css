@@ -186,12 +186,6 @@ body {
   color: var(--muted);
 }
 
-.workspace-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 40px 48px;
-}
-
 /* ── Drop Zone ── */
 .dropzone {
   border: 2px dashed var(--border);

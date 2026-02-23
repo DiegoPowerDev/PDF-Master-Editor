@@ -5,7 +5,7 @@ import { useState } from "react";
 type Step =
   | ""
   | "Preparando archivo..."
-  | "Convirtiendo archivo..."
+  | "Convirtiendo..."
   | "Preparando descarga..."
   | "¡Listo! Tu archivo está disponible para descargar por 5 minutos."
   | "Error desconocido";

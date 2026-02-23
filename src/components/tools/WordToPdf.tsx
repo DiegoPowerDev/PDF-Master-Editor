@@ -19,7 +19,7 @@ export default function WordToPdf() {
       : `${(b / 1048576).toFixed(1)} MB`;
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center">
+    <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center">
       {!file ? (
         <div className="w-[400px] h-[400px] flex items-center justify-center">
           <FileDropzone
@@ -33,24 +33,25 @@ export default function WordToPdf() {
         </div>
       ) : (
         <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
-          <div className="flex flex-col w-full items-center justify-center gap-2">
-            <Doc width={150} height={150} />
-
-            <div className="font-bold text-sm text-center ">
-              Archivo cargado:
+          <div className="grid grid-cols-1 grid-rows-[2fr_1fr] items-center justify-center h-full p-4 gap-2">
+            <div className="w-full h-full flex justify-center items-center">
+              <Doc width={150} height={150} />
             </div>
-            <div className="cursor pointer flex flex-col w-11/12 justify-center items-center text-black bg-[#4ade80] p-2 px-8 rounded-xl text-center gap-2 font-bold text-sm relative">
-              <div>{file.name}</div>
-              <div className="text-gray-700">{formatSize(file.size)}</div>
-              <button
-                className="absolute top-2 right-2 text-red-800"
-                onClick={() => {
-                  setFile(null);
-                  reset();
-                }}
-              >
-                ✕
-              </button>
+
+            <div className="h-full flex flex-col w-full  items-center">
+              <div className="cursor pointer flex   p-4 justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   px-8 rounded-xl text-center gap-2 font-bold text-sm">
+                <div>{file.name}</div>
+                <div className="text-gray-700">{formatSize(file.size)}</div>
+                <button
+                  className="absolute top-2 right-2 text-red-800"
+                  onClick={() => {
+                    setFile(null);
+                    reset();
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center h-full p-4 gap-2">
@@ -65,18 +66,24 @@ export default function WordToPdf() {
               </button>
             )}
           </div>
-          <div className="flex flex-col items-center justify-center gap-8">
+          <div className="grid grid-cols-1 grid-rows-[2fr_1fr] items-center justify-center h-full p-4 gap-2">
             {statusBarStatus === "success" && (
               <>
-                <Pdf width={150} height={150} />
-                <a
-                  className="download-btn p-8"
-                  href={downloadUrl}
-                  download={file?.name.replace(/\.docx?$/, ".pdf") || "output"}
-                >
-                  <Download /> Descargar{" "}
-                  {file?.name.replace(/\.docx?$/, ".pdf")}
-                </a>
+                <div className="h-full flex items-center justify-center">
+                  <Pdf width={150} height={150} />
+                </div>
+                <div className="h-full flex flex-col w-full  items-center">
+                  <a
+                    className="cursor pointer flex p-4  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]   px-8 rounded-xl text-center gap-2 font-bold text-sm"
+                    href={downloadUrl}
+                    download={
+                      file?.name.replace(/\.docx?$/, ".pdf") || "output"
+                    }
+                  >
+                    <Download />
+                    {file?.name.replace(/\.docx?$/, ".pdf")}
+                  </a>
+                </div>
               </>
             )}
           </div>

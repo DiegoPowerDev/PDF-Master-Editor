@@ -89,7 +89,7 @@ export default function Home() {
           <h1>{activeTool.label}</h1>
           <p>{activeTool.desc}</p>
         </header>
-        <div className="workspace-body">
+        <div className="justify-center flex items-center p-12 flex-1">
           <ActiveComponent />
         </div>
       </section>
