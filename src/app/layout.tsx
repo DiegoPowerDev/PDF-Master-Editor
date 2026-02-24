@@ -7,8 +7,11 @@ export const metadata: Metadata = {
   applicationName: content.metadata.applicationName,
   description: content.metadata.description,
   authors: content.metadata.authors,
-  metadataBase: new URL("https://diegotorres-portfoliodev.vercel.app"),
+  metadataBase: new URL("https://fastpdfmaster.vercel.app"),
   openGraph: content.metadata.openGraph,
+  verification: {
+    google: "abSLIjYehY7UNNtTck9OZ0lKx9FvXoWr4XvLnOBVs1M",
+  },
 };
 
 export default function RootLayout({
@@ -18,13 +21,33 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <head>
-        <meta
-          name="google-site-verification"
-          content="abSLIjYehY7UNNtTck9OZ0lKx9FvXoWr4XvLnOBVs1M"
+      <body>
+        {children}
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Fast PDF Master",
+              operatingSystem: "All",
+              applicationCategory: "BusinessApplication",
+              description:
+                "Herramienta web para unir, dividir y convertir archivos PDF de forma rápida.",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+              },
+              author: {
+                "@type": "Person",
+                name: "Diego Torres",
+              },
+            }),
+          }}
         />
-      </head>
-      <body>{children}</body>
+      </body>
     </html>
   );
 }
