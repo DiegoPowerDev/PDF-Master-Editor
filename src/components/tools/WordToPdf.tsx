@@ -34,7 +34,7 @@ export default function WordToPdf() {
       ) : (
         <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
           <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
-            <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
+            <div className="md:w-full  flex justify-center items-center md:items-end text-4xl">
               <Doc className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36" />
             </div>
 

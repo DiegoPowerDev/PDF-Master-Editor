@@ -54,16 +54,20 @@ export default function SplitPdf() {
   return (
     <div className=" w-full 2xl:w-3/4 flex flex-col items-center justify-center">
       {file ? (
-        <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
-          {/* Columna izquierda */}
-          <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
-            <div className="w-full h-full flex justify-center items-end">
-              <Pdf width={150} height={150} />
+        <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center ">
+          <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
+            <div className="md:w-full  flex flex-col justify-center items-center  text-4xl">
+              <Pdf className=" w-24 h-24 lg:w-36 lg:h-36" />
+              <div className="text-gray-700 text-sm md:hidden text-center">
+                {formatSize(file.size)}
+              </div>
             </div>
-            <div className="h-full flex flex-col w-full  items-center">
-              <div className="cursor pointer flex   p-4 justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   px-8 rounded-xl text-center gap-2 font-bold text-sm">
+            <div className="h-full flex flex-col w-full  items-center justify-center gap-2 md:gap-4 p-4">
+              <div className="cursor pointer flex   p-2  justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   px-8 rounded-xl text-center gap-2 font-bold text-sm">
                 <div>{file.name}</div>
-                <div className="text-gray-700">{formatSize(file.size)}</div>
+                <div className="text-gray-700 hidden md:block">
+                  {formatSize(file.size)}
+                </div>
                 <button
                   className="absolute top-2 right-2 text-red-800"
                   onClick={() => {
@@ -74,64 +78,70 @@ export default function SplitPdf() {
                   ✕
                 </button>
               </div>
-            </div>
-            <div className=" flex w-full justify-center gap-4 px-4">
-              <div className="flex flex-col w-full items-center">
-                <label className="text-center text-white/40">
-                  Página inicio
-                </label>
-                <input
-                  type="number"
-                  min="1"
-                  value={startPage}
-                  onChange={(e) => handleStartPage(e.target.value)}
-                  onBlur={(e) => {
-                    if (!e.target.value) handleStartPage("1");
-                  }}
-                  className={cn(
-                    !isValid
-                      ? "border-red-500 border"
-                      : "border border-white/20",
-                    "bg-gray-900 w-20 p-2 rounded-xl",
-                  )}
-                  style={{ borderColor: !isValid ? "var(--error)" : undefined }}
-                />
+              <div className="flex w-full items-end md:items-center justify-center">
+                <div className="flex flex-col w-full items-center">
+                  <label className="text-center text-white/40">
+                    Página inicio
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={startPage}
+                    onChange={(e) => handleStartPage(e.target.value)}
+                    onBlur={(e) => {
+                      if (!e.target.value) handleStartPage("1");
+                    }}
+                    className={cn(
+                      !isValid
+                        ? "border-red-500 border"
+                        : "border border-white/20",
+                      "bg-gray-900 w-20 p-2 rounded-xl",
+                    )}
+                    style={{
+                      borderColor: !isValid ? "var(--error)" : undefined,
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col w-full items-center">
+                  <label className="text-center text-white/40">
+                    Página fin
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={endPage}
+                    onChange={(e) => handleEndPage(e.target.value)}
+                    onBlur={(e) => {
+                      if (!e.target.value) handleEndPage(String(startPage));
+                    }}
+                    className={cn(
+                      !isValid
+                        ? "border-red-500 border"
+                        : "border border-white/20",
+                      "bg-gray-900 w-20 p-2 rounded-xl",
+                    )}
+                    style={{
+                      borderColor: !isValid ? "var(--error)" : undefined,
+                    }}
+                  />
+                </div>
+                {!isValid && (
+                  <p
+                    style={{
+                      fontSize: 12,
+                      color: "var(--error)",
+                      fontFamily: "var(--font-mono)",
+                    }}
+                  >
+                    La página inicio no puede ser mayor a la página fin
+                  </p>
+                )}
               </div>
-              <div className="flex flex-col w-full items-center">
-                <label className="text-center text-white/40">Página fin</label>
-                <input
-                  type="number"
-                  min="1"
-                  value={endPage}
-                  onChange={(e) => handleEndPage(e.target.value)}
-                  onBlur={(e) => {
-                    if (!e.target.value) handleEndPage(String(startPage));
-                  }}
-                  className={cn(
-                    !isValid
-                      ? "border-red-500 border"
-                      : "border border-white/20",
-                    "bg-gray-900  w-20 p-2 rounded-xl",
-                  )}
-                  style={{ borderColor: !isValid ? "var(--error)" : undefined }}
-                />
-              </div>
-              {!isValid && (
-                <p
-                  style={{
-                    fontSize: 12,
-                    color: "var(--error)",
-                    fontFamily: "var(--font-mono)",
-                  }}
-                >
-                  La página inicio no puede ser mayor a la página fin
-                </p>
-              )}
             </div>
           </div>
 
           {/* Columna central */}
-          <div className="flex flex-col items-center justify-center h-full p-4 gap-2 pb-20">
+          <div className="flex flex-col items-center justify-center h-full md:p-4 gap-2 md:pb-20">
             <StatusBar status={statusBarStatus} message={statusBarMessage} />
             {statusBarMessage === "" && (
               <button
@@ -145,13 +155,13 @@ export default function SplitPdf() {
           </div>
 
           {/* Columna derecha */}
-          <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
+          <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
             {statusBarStatus === "success" && downloadUrl && (
               <>
-                <div className="h-full flex  justify-center items-end">
-                  <Pdf width={150} height={150} />
+                <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
+                  <Pdf className=" w-24 h-24 lg:w-36 lg:h-36" />
                 </div>
-                <div className="h-full flex flex-col w-full items-center">
+                <div className="h-full flex flex-col w-full md:justify-start justify-center items-center">
                   <button
                     className="cursor-pointer flex p-4 justify-center min-w-1/2 max-w-full items-center text-black bg-[#4ade80] px-8 rounded-xl text-center gap-2 font-bold text-sm"
                     onClick={() => downloadAs(getDownloadName())}

@@ -21,12 +21,12 @@ export default function PdfToWord() {
   return (
     <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center">
       {file ? (
-        <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
-          <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
-            <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
-              <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36" />
+        <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
+          <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
+            <div className="md:w-full  flex justify-center items-center md:items-end text-4xl">
+              <Pdf className=" w-24 h-24 lg:w-36 lg:h-36" />
             </div>
-            <div className="h-full flex flex-col w-full  items-center">
+            <div className="h-full flex flex-col w-full md:justify-start justify-center items-center">
               <div className="cursor pointer flex   p-4 justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   px-8 rounded-xl text-center gap-2 font-bold text-sm">
                 <div>{file.name}</div>
                 <div className="text-gray-700">{formatSize(file.size)}</div>
@@ -42,7 +42,7 @@ export default function PdfToWord() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center h-full p-4 gap-2 pb-20">
+          <div className="flex flex-col items-center justify-center h-full md:p-4 gap-2 md:pb-20">
             <StatusBar status={statusBarStatus} message={statusBarMessage} />
             {statusBarMessage === "" && (
               <button
@@ -54,13 +54,13 @@ export default function PdfToWord() {
               </button>
             )}
           </div>
-          <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
+          <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
             {statusBarStatus === "success" && (
               <>
                 <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
-                  <Doc className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36" />
+                  <Doc className=" w-24  h-24 lg:w-36 lg:h-36" />
                 </div>
-                <div className="h-full flex flex-col w-full  items-center">
+                <div className="h-full flex flex-col w-full md:justify-start justify-center items-center">
                   <a
                     className="cursor pointer flex p-4  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]   px-8 rounded-xl text-center gap-2 font-bold text-sm"
                     href={downloadUrl}
@@ -68,7 +68,7 @@ export default function PdfToWord() {
                       file?.name.replace(/\.pdf?$/, ".docx") || "output"
                     }
                   >
-                    <Download />
+                    <Download className="w-12 h-12 md:w-24 md:h-24 lg:w-36 lg:h-36" />
                     {file?.name.replace(/\.pdf?$/, ".docx")}
                   </a>
                 </div>

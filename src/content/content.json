@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "title": "Fast PDF Master | Convierte Docs, PDF e imagenes a PDF Gratis y Rápido",
+    "applicationName": "Fast PDF Master",
+    "description": "Herramienta online rápida para gestionar tus archivos PDF. Une, divide y convierte imágenes a PDF en segundos, sin pérdida de calidad y con total privacidad.",
+    "authors": [
+      {
+        "name": "Diego Torres",
+        "url": "https://diegotorres-portfoliodev.vercel.app"
+      }
+    ],
+    "keywords": [
+      "unir pdf online",
+      "dividir pdf gratis",
+      "convertir imagen a pdf",
+      "herramientas pdf rápidas",
+      "fast pdf master",
+      "organizar paginas pdf"
+    ],
+    "openGraph": {
+      "title": "Fast PDF Master | Gestión de PDF de Alto Rendimiento",
+      "description": "Optimiza tu flujo de trabajo con Fast PDF Master. Herramientas potentes de edición de PDF creadas para la velocidad.",
+      "url": "https://fastpdfmaster.vercel.app",
+      "siteName": "Fast PDF Master",
+      "images": [
+        {
+          "url": "/logo.webp",
+          "width": 1200,
+          "height": 630,
+          "alt": "Fast PDF Master - Herramientas profesionales de PDF"
+        }
+      ],
+      "locale": "es_MX",
+      "type": "website"
+    },
+    "twitter": {
+      "card": "summary_large_image",
+      "title": "Fast PDF Master | Edición de PDF en segundos",
+      "description": "Une y divide PDFs rápidamente con la tecnología de Fast PDF Master.",
+      "images": ["/logo.webp"]
+    }
+  }
+}

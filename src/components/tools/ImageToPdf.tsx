@@ -33,20 +33,22 @@ export default function ImageToPdf() {
           />
         </div>
       ) : (
-        <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center ">
-          <div className="grid flex flex-col items-center justify-center   p-4 gap-4 ">
+        <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
+          <div className="border rounded-xl md:border-0  grid md:grid-cols-1 md:grid-rows-2 grid-cols-2  h-full p-4 gap-4 md:gap-12">
             {preview && (
-              <div className="w-full   flex justify-center items-end ">
+              <div className="w-full h-full flex justify-center items-center md:items-end ">
                 <img
                   src={preview}
                   alt="Imagen a convertir a PDF"
-                  className="max-w-full object-contain border rounded-xl"
+                  className="max-w-full object-contain border  "
                 />
               </div>
             )}
-            <div className="h-full flex flex-col w-full  items-center">
-              <div className="cursor pointer flex   p-4 justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   px-8 rounded-xl text-center gap-2 font-bold text-sm">
-                <div>{file.name}</div>
+            <div className="h-full flex flex-col w-full md:justify-start justify-center items-center">
+              <div className="cursor pointer flex md:justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   md:px-8 md:py-4 px-2 py-4 rounded-xl text-center gap-2 font-bold text-sm">
+                <p className="text-xs md:text-center  flex break-all">
+                  {file.name}
+                </p>
                 <button
                   className="cursor-pointer absolute top-2 right-2 text-red-800"
                   onClick={() => {

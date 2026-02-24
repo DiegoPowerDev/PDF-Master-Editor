@@ -22,7 +22,7 @@ export default function StatusBar({ status, message }: Props) {
   return (
     <div
       className={cn(
-        ` rounded-xl p-4 flex md:flex-col items-center justify-center gap-2`,
+        ` rounded-xl md:p-4 flex md:flex-col items-center justify-center gap-2`,
       )}
     >
       {status === "loading" && (

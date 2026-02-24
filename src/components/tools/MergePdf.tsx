@@ -26,8 +26,8 @@ export default function MergePdf() {
     <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center">
       {files.length > 0 ? (
         <>
-          <div className="h-full w-full grid grid-cols-3 gap-2 items-center justify-center">
-            <div className="flex flex-col gap-2 h-full">
+          <div className="h-full w-full grid grid-cols-1 grid-rows-[2fr_1fr_2fr] md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
+            <div className="border rounded-xl md:border-0 md:grid md:flex-col flex justify-center h-full p-4 gap-4 ">
               <div className="flex flex-col w-full gap-2">
                 {statusBarStatus === "idle" && (
                   <FileDropzone
@@ -61,16 +61,16 @@ export default function MergePdf() {
                 className={cn(
                   statusBarMessage != "" &&
                     "select-none pointer-events-none opacity-20",
-                  "h-[45vh] 2xl:h-[70vh] flex flex-col gap-2 overflow-x-auto p-2",
+                  "h-60 md:h-[45vh] 2xl:h-[70vh] flex flex-col gap-2 workspace-body overflow-x-hidden p-2 border rounded-xl",
                 )}
               >
                 {files.map((f, i) => (
                   <div
-                    className="flex items-center w-full gap-2 text-sm relative hover:bg-white/10 rounded-xl px-4 py-2"
+                    className="flex items-center w-full gap-2 text-sm relative bg-white/10 rounded-xl px-4 py-2"
                     key={i}
                   >
                     <span
-                      className=" "
+                      className="flex-shrink-0"
                       style={{
                         fontFamily: "monospace",
                         fontSize: 13,
@@ -79,12 +79,19 @@ export default function MergePdf() {
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <div>
-                      <div>{f.name}</div>
-                      <div className="text-white/20">{formatSize(f.size)}</div>
+
+                    {/* Cambiamos w-fit por min-w-0 y flex-1 */}
+                    <div className="flex flex-col flex-1 min-w-0 pr-8">
+                      <div className="truncate w-full text-white font-medium">
+                        {f.name}
+                      </div>
+                      <div className="text-white/20 text-xs">
+                        {formatSize(f.size)}
+                      </div>
                     </div>
+
                     <button
-                      className="absolute top-2 right-2 hover:text-red-500 p-2 cursor-pointer"
+                      className="absolute top-2 right-2 hover:text-red-500 p-2 cursor-pointer transition-colors"
                       onClick={() => removeFile(i)}
                     >
                       ✕
@@ -93,7 +100,7 @@ export default function MergePdf() {
                 ))}
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center h-full p-4 gap-2 pb-20">
+            <div className="flex flex-col items-center justify-center h-full p-4 gap-2 md:pb-20">
               <StatusBar status={statusBarStatus} message={statusBarMessage} />
               {statusBarMessage === "" && (
                 <>
@@ -118,7 +125,7 @@ export default function MergePdf() {
                 </>
               )}
             </div>
-            <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12">
+            <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
               {statusBarStatus === "success" && (
                 <>
                   <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
@@ -132,7 +139,7 @@ export default function MergePdf() {
                         files[0].name.replace(/\.docx?$/, ".pdf") || "output"
                       }
                     >
-                      <Download />
+                      <Download className="w-12 h-12 md:w-24 md:h-24 lg:w-36 lg:h-36" />
                       {files[0].name.replace(/\.docx?$/, ".pdf")}
                     </a>
                   </div>

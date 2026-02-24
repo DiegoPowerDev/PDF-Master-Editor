@@ -6,14 +6,11 @@ import PdfToWord from "@/components/tools/PdfToWord";
 import MergePdf from "@/components/tools/MergePdf";
 import ImageToPdf from "@/components/tools/ImageToPdf";
 import SplitPdf from "@/components/tools/SplitPdf";
-import dynamic from "next/dynamic";
 import {
-  IconArrowDown,
   IconArrowRight,
   IconChevronDown,
   IconFileTypeDoc,
   IconFileTypePdf,
-  IconPdf,
   IconPhoto,
   IconPlus,
   IconScissors,
@@ -80,7 +77,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col md:flex-row h-full w-full">
-      <aside className="bg-[#141417] flex flex-col w-full md:w-1/4 gap-2 pt-8 pb-2 md:py-12 px-2">
+      <aside className="bg-[#141417] flex flex-col w-full md:w-1/4 gap-2 pt-4 pb-2 md:py-12 px-2">
         <div className="flex gap-2 justify-center md:justify-start">
           <span className="text-amber-300 ">
             <IconFileTypePdf size={60} />
@@ -95,20 +92,25 @@ export default function Home() {
         </div>
         <nav
           className={cn(
-            openMenu ? "flex flex-col" : "hidden",
-            "items-center h-full  justify-center gap-2",
+            "items-center h-full flex flex-col  justify-center gap-2",
           )}
         >
           {tools.map((tool) => (
             <button
               key={tool.id}
               className={cn(
+                openMenu || activeTool.id === tool.id
+                  ? "flex"
+                  : "hidden md:flex",
                 activeTool.id === tool.id
                   ? "bg-amber-300 text-black "
                   : "text-white",
-                "rounded-xl w-full cursor-pointer flex py-2 px-4 items-center text-start gap-4 text-sm ",
+                "rounded-xl w-full cursor-pointer   py-2 px-4 items-center text-start gap-4 text-sm ",
               )}
-              onClick={() => setActiveTool(tool)}
+              onClick={() => {
+                setActiveTool(tool);
+                setOpenMenu(false);
+              }}
             >
               <span className=" flex flex-col justify-center h-full ">
                 {tool.icon}
@@ -121,7 +123,7 @@ export default function Home() {
           ))}
         </nav>
         <div
-          className="w-full flex justify-center"
+          className="w-full flex justify-center md:hidden   "
           onClick={() => setOpenMenu(!openMenu)}
         >
           <IconChevronDown />
@@ -129,7 +131,7 @@ export default function Home() {
       </aside>
 
       <section className="flex w-full h-full flex-col">
-        <header className="border-b border-white/20 p-4">
+        <header className="border-b border-white/20 p-4 hidden md:block">
           <h1 className="font-bold text-amber-300 text-2xl">
             {activeTool.label}
           </h1>
