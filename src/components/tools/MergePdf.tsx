@@ -61,7 +61,7 @@ export default function MergePdf() {
                 className={cn(
                   statusBarMessage != "" &&
                     "select-none pointer-events-none opacity-20",
-                  "h-60 md:h-[45vh] 2xl:h-[70vh] flex flex-col gap-2 workspace-body overflow-x-hidden p-2 border rounded-xl",
+                  "h-60 md:h-[45vh] 2xl:h-[55vh] flex flex-col gap-2 workspace-body overflow-x-hidden p-2 border rounded-xl",
                 )}
               >
                 {files.map((f, i) => (

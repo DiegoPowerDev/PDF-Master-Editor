@@ -173,20 +173,25 @@ export default function Home() {
           <DialogHeader>
             <DialogTitle className="flex gap-2 items-center mb-2 text-amber-400">
               <Info />
-              Información
+              Información del Proyecto
             </DialogTitle>
-            <DialogDescription>
-              QR gratuitos para siempre. Sin caducidad, sin publicidad y sin
-              rastreadores. Proyecto desarrollado bajo la filosofía de software
-              libre. Si buscas un desarrollador con este nivel de atención al
-              detalle, visita mi portafolio:
+            <DialogDescription className="text-amber-100">
+              Gestión de PDF rápida, segura y gratuita. Tus archivos se procesan
+              de forma local o segura, garantizando que tu información nunca sea
+              almacenada ni rastreada. Sin límites de uso, sin publicidad y sin
+              registros obligatorios.
+              <br />
+              <br />
+              Este proyecto demuestra mi compromiso con la eficiencia técnica y
+              la seguridad del usuario. Si buscas un desarrollador especializado
+              en productos digitales de alto rendimiento:
               <br />
               <a
                 target="_blank"
                 href="https://diegotorres-portfoliodev.vercel.app"
-                className="flex justify-center mt-4 font-bold p-2 rounded hover:opacity-80 text-amber-400 text-xl"
+                className="flex justify-center mt-4 font-bold p-2 rounded hover:scale-105 duration-200 text-amber-500 text-xl"
               >
-                Diego Torres
+                Diego Torres | Portfolio
               </a>
             </DialogDescription>
           </DialogHeader>

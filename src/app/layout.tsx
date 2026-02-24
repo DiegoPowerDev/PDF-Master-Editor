@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 
+import { Cinzel } from "next/font/google";
 import "./globals.css";
 import content from "@/content/content.json";
 
@@ -16,6 +17,12 @@ export const metadata: Metadata = {
   },
 };
 
+const cinzel = Cinzel({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-second",
+});
 export default function RootLayout({
   children,
 }: {
@@ -23,7 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>
+      <body
+        className={`${cinzel.className}  antialiased w-full h-screen flex flex-col text-white bg-[#0c0c0e]`}
+      >
         {children}
 
         <script

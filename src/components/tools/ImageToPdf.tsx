@@ -37,9 +37,9 @@ export default function ImageToPdf() {
         </div>
       ) : (
         <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
-          <div className="border rounded-xl md:border-0  grid md:grid-cols-1 md:grid-rows-2 grid-cols-2  h-full p-4 gap-4 md:gap-12">
+          <div className="border rounded-xl md:border-0  grid md:flex md:flex-col md:justify-center grid-cols-2  h-full p-4 gap-4 md:gap-12">
             {preview && (
-              <div className="w-full h-full flex justify-center items-center md:justify-end flex-col gap-4">
+              <div className="w-full h-full md:h-auto flex justify-center items-center md:justify-end flex-col gap-4">
                 <img
                   src={preview}
                   alt="Imagen a convertir a PDF"
@@ -51,7 +51,7 @@ export default function ImageToPdf() {
               </div>
             )}
 
-            <div className="h-full flex flex-col  w-full  items-center md:justify-start justify-center  gap-2 md:gap-4  ">
+            <div className=" h-full md:h-auto flex flex-col  w-full  items-center md:justify-start justify-center  gap-2 md:gap-4  ">
               <div className=" min-w-0 cursor pointer  flex md:justify-center md:min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80] md:px-8 md:py-4 p-4 rounded-xl text-center gap-2 font-bold text-sm">
                 <p className="text-xs md:text-center  flex   truncate">
                   {file.name}
