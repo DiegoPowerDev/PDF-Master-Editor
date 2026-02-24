@@ -135,7 +135,7 @@ export default function Home() {
               </span>
               <span className="flex flex-col">
                 <span className="font-bold">{tool.label}</span>
-                <span className="opacity-80">{tool.desc}</span>
+                <span className="font-semibold opacity-80">{tool.desc}</span>
               </span>
             </button>
           ))}

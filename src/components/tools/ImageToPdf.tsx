@@ -45,7 +45,7 @@ export default function ImageToPdf() {
                   alt="Imagen a convertir a PDF"
                   className="max-w-full object-contain border  "
                 />
-                <div className="text-gray-700 text-sm  ">
+                <div className="text-gray-400 text-sm  ">
                   {formatSize(file.size)}
                 </div>
               </div>
