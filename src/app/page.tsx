@@ -1,5 +1,11 @@
 "use client";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useState } from "react";
 import WordToPdf from "@/components/tools/WordToPdf";
 import PdfToWord from "@/components/tools/PdfToWord";
@@ -16,6 +22,7 @@ import {
   IconScissors,
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
+import { Info } from "lucide-react";
 
 const tools = [
   {
@@ -74,14 +81,16 @@ export default function Home() {
   const [activeTool, setActiveTool] = useState(tools[0]);
   const ActiveComponent = activeTool.component;
   const [openMenu, setOpenMenu] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <main className="flex flex-col md:flex-row h-full w-full">
       <aside className="bg-[#141417] flex flex-col w-full md:w-1/4 gap-2 pt-4 pb-2 md:py-12 px-2">
-        <div className="flex gap-2 justify-center md:justify-start">
+        <div className="flex gap-2 justify-between md:justify-start">
           <span className="text-amber-300 ">
             <IconFileTypePdf size={60} />
           </span>
+
           <span className="font-bold text-2xl">
             Fast
             <span className="px-2 text-amber-300">
@@ -89,6 +98,15 @@ export default function Home() {
               <br /> Conversor
             </span>
           </span>
+          <div className="h-full    justify-center items-center  flex md:hidden">
+            <button
+              aria-label="informacion"
+              onClick={() => setOpen(true)}
+              className="flex justify-end  cursor-pointer"
+            >
+              <Info className="text-amber-400" size={40} />
+            </button>
+          </div>
         </div>
         <nav
           className={cn(
@@ -122,6 +140,15 @@ export default function Home() {
             </button>
           ))}
         </nav>
+        <div className=" justify-end hidden md:flex">
+          <button
+            aria-label="informacion"
+            onClick={() => setOpen(true)}
+            className="flex justify-end pr-8 cursor-pointer"
+          >
+            <Info className="text-amber-400" size={30} />
+          </button>
+        </div>
         <div
           className="w-full flex justify-center md:hidden   "
           onClick={() => setOpenMenu(!openMenu)}
@@ -141,6 +168,30 @@ export default function Home() {
           <ActiveComponent />
         </div>
       </section>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="bg-black border-amber-300">
+          <DialogHeader>
+            <DialogTitle className="flex gap-2 items-center mb-2 text-amber-400">
+              <Info />
+              Información
+            </DialogTitle>
+            <DialogDescription>
+              QR gratuitos para siempre. Sin caducidad, sin publicidad y sin
+              rastreadores. Proyecto desarrollado bajo la filosofía de software
+              libre. Si buscas un desarrollador con este nivel de atención al
+              detalle, visita mi portafolio:
+              <br />
+              <a
+                target="_blank"
+                href="https://diegotorres-portfoliodev.vercel.app"
+                className="flex justify-center mt-4 font-bold p-2 rounded hover:opacity-80 text-amber-400 text-xl"
+              >
+                Diego Torres
+              </a>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }

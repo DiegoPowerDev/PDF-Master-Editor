@@ -5,7 +5,7 @@ import FileDropzone from "@/components/FileDropzone";
 import StatusBar from "@/components/StatusBar";
 import { usePdfOperation } from "@/hooks/usePdfOperation";
 import Pdf from "@/assets/pdf.svg";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowDown, ArrowRight, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function SplitPdf() {
@@ -56,18 +56,18 @@ export default function SplitPdf() {
       {file ? (
         <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center ">
           <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
-            <div className="md:w-full  flex flex-col justify-center items-center  text-4xl">
+            <div className="md:w-full h-full flex flex-col justify-center gap-4 md:justify-end items-center  text-4xl">
               <Pdf className=" w-24 h-24 lg:w-36 lg:h-36" />
-              <div className="text-gray-700 text-sm md:hidden text-center">
+              <div className="text-gray-700 text-sm  ">
                 {formatSize(file.size)}
               </div>
             </div>
-            <div className="h-full flex flex-col w-full  items-center justify-center gap-2 md:gap-4 p-4">
-              <div className="cursor pointer flex   p-2  justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   px-8 rounded-xl text-center gap-2 font-bold text-sm">
-                <div>{file.name}</div>
-                <div className="text-gray-700 hidden md:block">
-                  {formatSize(file.size)}
-                </div>
+            <div className="h-full flex flex-col w-1/2 md:w-full  items-center justify-start gap-2 md:gap-4  ">
+              <div className="w-3/4 min-w-0 cursor pointer  flex md:justify-center md:min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80] md:px-8 md:py-4 p-4 rounded-xl text-center gap-2 font-bold text-sm">
+                <p className="text-xs md:text-center  flex  truncate">
+                  {file.name}
+                </p>
+
                 <button
                   className="absolute top-2 right-2 text-red-800"
                   onClick={() => {
@@ -149,7 +149,13 @@ export default function SplitPdf() {
                 onClick={() => file && run([file], { startPage, endPage })}
                 disabled={!file || statusBarStatus === "loading" || !isValid}
               >
-                Extraer páginas <ArrowRight />
+                Extraer páginas{" "}
+                <span className="hidden md:block">
+                  <ArrowRight />
+                </span>
+                <span className="block md:hidden">
+                  <ArrowDown />
+                </span>
               </button>
             )}
           </div>

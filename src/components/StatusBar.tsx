@@ -27,12 +27,12 @@ export default function StatusBar({ status, message }: Props) {
     >
       {status === "loading" && (
         <div
-          className={`w-40 h-40 border-8 border-[#e8ff4720] border-t-[#e8ff47] rounded-full animate-spin`}
+          className={`w-20 h-20 md:w-40 md:h-40 border-8 border-[#e8ff4720] border-t-[#e8ff47] rounded-full animate-spin`}
         />
       )}
       {status === "success" && (
         <span>
-          <Check className="text-[#4ade80] w-8 h-8 md:w-24 md:h-24 lg:w-36 lg:h-36" />
+          <Check className="text-[#4ade80] w-8 h-8 md:w-24 md:h-24 " />
         </span>
       )}
       {status === "error" && (

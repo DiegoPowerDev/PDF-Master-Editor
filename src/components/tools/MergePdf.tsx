@@ -6,7 +6,7 @@ import StatusBar from "@/components/StatusBar";
 import { usePdfOperation } from "@/hooks/usePdfOperation";
 
 import Pdf from "@/assets/pdf.svg";
-import { ArrowRight, Download, Trash, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowRight, Download, Trash, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 export default function MergePdf() {
   const [files, setFiles] = useState<File[]>([]);
@@ -26,7 +26,7 @@ export default function MergePdf() {
     <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center">
       {files.length > 0 ? (
         <>
-          <div className="h-full w-full grid grid-cols-1 grid-rows-[2fr_1fr_2fr] md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
+          <div className="h-full w-full grid grid-cols-1 grid-rows-[2fr_1fr_1fr] md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
             <div className="border rounded-xl md:border-0 md:grid md:flex-col flex justify-center h-full p-4 gap-4 ">
               <div className="flex flex-col w-full gap-2">
                 {statusBarStatus === "idle" && (
@@ -43,7 +43,7 @@ export default function MergePdf() {
                     className={cn(
                       statusBarStatus === "loading" &&
                         "select-none pointer-events-none opacity-20",
-                      "cursor-pointer border-2 rounded p-2  border-red-500 bg-red-400  w-full flex gap-2 justify-center items-center ",
+                      "cursor-pointer border-2 rounded p-2  border-red-500 bg-red-400  w-full flex gap-2 justify-center items-center text-xs md:text-md",
                     )}
                     onClick={() => {
                       setFiles([]);
@@ -109,7 +109,13 @@ export default function MergePdf() {
                     onClick={() => run(files)}
                     disabled={files.length < 2 || statusBarStatus === "loading"}
                   >
-                    Unir {files.length} PDFs <ArrowRight />
+                    Unir {files.length} PDFs{" "}
+                    <span className="hidden md:block">
+                      <ArrowRight />
+                    </span>
+                    <span className="block md:hidden">
+                      <ArrowDown />
+                    </span>
                   </button>
 
                   <p

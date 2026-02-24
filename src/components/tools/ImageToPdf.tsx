@@ -5,7 +5,7 @@ import { useState } from "react";
 import FileDropzone from "@/components/FileDropzone";
 import StatusBar from "@/components/StatusBar";
 import { usePdfOperation } from "@/hooks/usePdfOperation";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowDown, ArrowRight, Download } from "lucide-react";
 
 export default function ImageToPdf() {
   const [file, setFile] = useState<File | null>(null);
@@ -21,7 +21,10 @@ export default function ImageToPdf() {
     reader.onload = (e) => setPreview(e.target?.result as string);
     reader.readAsDataURL(f);
   };
-
+  const formatSize = (b: number) =>
+    b < 1048576
+      ? `${(b / 1024).toFixed(1)} KB`
+      : `${(b / 1048576).toFixed(1)} MB`;
   return (
     <div className="h-full w-full 2xl:w-3/4 flex flex-col items-center justify-center ">
       {!file ? (
@@ -36,17 +39,21 @@ export default function ImageToPdf() {
         <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
           <div className="border rounded-xl md:border-0  grid md:grid-cols-1 md:grid-rows-2 grid-cols-2  h-full p-4 gap-4 md:gap-12">
             {preview && (
-              <div className="w-full h-full flex justify-center items-center md:items-end ">
+              <div className="w-full h-full flex justify-center items-center md:justify-end flex-col gap-4">
                 <img
                   src={preview}
                   alt="Imagen a convertir a PDF"
                   className="max-w-full object-contain border  "
                 />
+                <div className="text-gray-700 text-sm  ">
+                  {formatSize(file.size)}
+                </div>
               </div>
             )}
-            <div className="h-full flex flex-col w-full md:justify-start justify-center items-center">
-              <div className="cursor pointer flex md:justify-center min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80]   md:px-8 md:py-4 px-2 py-4 rounded-xl text-center gap-2 font-bold text-sm">
-                <p className="text-xs md:text-center  flex break-all">
+
+            <div className="h-full flex flex-col  w-full  items-center md:justify-start justify-center  gap-2 md:gap-4  ">
+              <div className=" min-w-0 cursor pointer  flex md:justify-center md:min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80] md:px-8 md:py-4 p-4 rounded-xl text-center gap-2 font-bold text-sm">
+                <p className="text-xs md:text-center  flex   truncate">
                   {file.name}
                 </p>
                 <button
@@ -75,17 +82,23 @@ export default function ImageToPdf() {
                 className="p-4  bg-amber-300 text-black font-bold rounded-xl  hover:bg-amber-200 hover:-translate-y-0.5 duration-200 flex  items-center justify-center text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                 onClick={() => file && run([file])}
               >
-                Convertir a PDF <ArrowRight />
+                Convertir a PDF
+                <span className="hidden md:block">
+                  <ArrowRight />
+                </span>
+                <span className="block md:hidden">
+                  <ArrowDown />
+                </span>
               </button>
             )}
           </div>
-          <div className="grid grid-cols-1 grid-rows-2 items-center justify-center h-full p-4 gap-12  pt-20">
+          <div className="border rounded-xl md:border-0  grid md:grid-cols-1 md:grid-rows-2 grid-cols-2  h-full p-4 gap-4 md:gap-12">
             {statusBarStatus === "success" && (
               <>
-                <div className="h-full flex  justify-center items-end">
-                  <Pdf width={150} height={150} />
+                <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
+                  <Pdf className=" w-24  h-24 lg:w-36 lg:h-36" />
                 </div>
-                <div className="h-full flex flex-col w-full  items-center">
+                <div className="h-full flex flex-col w-full md:justify-start justify-center items-center">
                   <a
                     className="cursor pointer flex p-4  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]   px-8 rounded-xl text-center gap-2 font-bold text-sm"
                     href={downloadUrl}
@@ -94,7 +107,7 @@ export default function ImageToPdf() {
                     }
                   >
                     <Download />
-                    <span className="ml-1">
+                    <span className="text-xs md:text-center  flex truncate">
                       {file?.name.replace(/\.[^/.]+$/, ".pdf")}
                     </span>
                   </a>
