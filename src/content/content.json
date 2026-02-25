@@ -3,6 +3,9 @@
     "title": "Fast PDF Master | Convierte Docs, PDF e imagenes a PDF Gratis y Rápido",
     "applicationName": "Fast PDF Master",
     "description": "Herramienta online rápida para gestionar tus archivos PDF. Une, divide y convierte imágenes a PDF en segundos, sin pérdida de calidad y con total privacidad.",
+    "alternates": {
+      "canonical": "https://fastpdfmaster.vercel.app"
+    },
     "authors": [
       {
         "name": "Diego Torres",
