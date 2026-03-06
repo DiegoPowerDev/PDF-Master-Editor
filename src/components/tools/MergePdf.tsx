@@ -10,7 +10,7 @@ import { ArrowDown, ArrowRight, Download, Trash, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 export default function MergePdf() {
   const [files, setFiles] = useState<File[]>([]);
-  const { run, reset, statusBarStatus, statusBarMessage, downloadUrl } =
+  const { run, reset, statusBarStatus, statusBarMessage, downloadAs } =
     usePdfOperation("merge");
 
   const formatSize = (b: number) => `${(b / 1024).toFixed(1)} KB`;
@@ -137,17 +137,18 @@ export default function MergePdf() {
                   <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
                     <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36" />
                   </div>
-                  <div className="h-full flex flex-col w-full  items-center">
-                    <a
-                      className="cursor pointer flex p-4  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]   px-8 rounded-xl text-center gap-2 font-bold text-sm"
-                      href={downloadUrl}
-                      download={
-                        files[0].name.replace(/\.docx?$/, ".pdf") || "output"
+                  <div className="h-full flex flex-col w-3/4 md:w-full  items-center md:justify-start justify-center  gap-2 md:gap-4 ">
+                    <button
+                      className="cursor-pointer md:h-16 flex p-5  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80] md:px-8 rounded-xl  gap-2 font-bold text-sm"
+                      onClick={() =>
+                        downloadAs(files[0].name.replace(/\.docx?$/, ".pdf"))
                       }
                     >
-                      <Download className="w-12 h-12 md:w-24 md:h-24 lg:w-36 lg:h-36" />
-                      {files[0].name.replace(/\.docx?$/, ".pdf")}
-                    </a>
+                      <Download />
+                      <span className="w-3/4 flex truncate">
+                        {files[0].name.replace(/\.docx?$/, ".pdf")}
+                      </span>
+                    </button>
                   </div>
                 </>
               )}

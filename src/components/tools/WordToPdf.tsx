@@ -10,7 +10,7 @@ import { ArrowDown, ArrowRight, Download, X } from "lucide-react";
 
 export default function WordToPdf() {
   const [file, setFile] = useState<File | null>(null);
-  const { run, reset, statusBarStatus, statusBarMessage, downloadUrl } =
+  const { run, reset, statusBarStatus, statusBarMessage, downloadAs } =
     usePdfOperation("word-to-pdf");
 
   const formatSize = (b: number) =>
@@ -36,9 +36,6 @@ export default function WordToPdf() {
           <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
             <div className="h-full w-full flex flex-col justify-center items-center md:justify-end   gap-2">
               <Doc className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36 " />
-              <div className="text-gray-700 text-xs text-center">
-                {formatSize(file.size)}
-              </div>
             </div>
 
             <div className="h-full flex flex-col w-3/4 md:w-full  items-center md:justify-start justify-center  gap-2 md:gap-4 ">
@@ -84,18 +81,17 @@ export default function WordToPdf() {
                   <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36" />
                 </div>
                 <div className="h-full flex flex-col w-3/4 md:w-full  items-center md:justify-start justify-center  gap-2 md:gap-4 ">
-                  <a
-                    className="cursor pointer flex p-4  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]  rounded-xl text-center gap-2 font-bold text-sm"
-                    href={downloadUrl}
-                    download={
-                      file?.name.replace(/\.docx?$/, ".pdf") || "output"
+                  <button
+                    className="cursor-pointer flex p-5  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]  rounded-xl text-center gap-2 font-bold text-sm"
+                    onClick={() =>
+                      downloadAs(file?.name.replace(/\.docx?$/, ".pdf"))
                     }
                   >
                     <Download />
                     <span className="w-3/4 flex truncate">
                       {file?.name.replace(/\.docx?$/, ".pdf")}
                     </span>
-                  </a>
+                  </button>
                 </div>
               </>
             )}

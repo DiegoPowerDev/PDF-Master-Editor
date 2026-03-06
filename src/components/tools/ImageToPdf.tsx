@@ -10,8 +10,14 @@ import { ArrowDown, ArrowRight, Download } from "lucide-react";
 export default function ImageToPdf() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
-  const { run, reset, statusBarStatus, statusBarMessage, downloadUrl } =
-    usePdfOperation("image-to-pdf");
+  const {
+    run,
+    reset,
+    statusBarStatus,
+    statusBarMessage,
+    downloadUrl,
+    downloadAs,
+  } = usePdfOperation("image-to-pdf");
 
   const handleFile = (files: File[]) => {
     const f = files[0];
@@ -36,7 +42,7 @@ export default function ImageToPdf() {
           />
         </div>
       ) : (
-        <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
+        <div className="h-full w-full grid grid-cols-1 grid-rows-[2fr_1fr_1fr] md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center p-4 md:p-0">
           <div className="border rounded-xl md:border-0  grid md:flex md:flex-col md:justify-center grid-cols-2  h-full p-4 gap-4 md:gap-12">
             {preview && (
               <div className="w-full h-full md:h-auto flex justify-center items-center md:justify-end flex-col gap-4">
@@ -51,8 +57,8 @@ export default function ImageToPdf() {
               </div>
             )}
 
-            <div className=" h-full md:h-auto flex flex-col  w-full  items-center md:justify-start justify-center  gap-2 md:gap-4  ">
-              <div className=" min-w-0 cursor pointer  flex md:justify-center md:min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80] md:px-8 md:py-4 p-4 rounded-xl text-center gap-2 font-bold text-sm">
+            <div className="h-full flex flex-col  w-full  items-center md:justify-start justify-center  gap-2 md:gap-4 ">
+              <div className=" min-w-0 cursor pointer  flex md:justify-center md:min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80] md:px-8   p-6 rounded-xl text-center gap-2 font-bold text-sm">
                 <p className="text-xs md:text-center  flex   truncate">
                   {file.name}
                 </p>
@@ -92,22 +98,21 @@ export default function ImageToPdf() {
               </button>
             )}
           </div>
-          <div className="border rounded-xl md:border-0  grid md:grid-cols-1 md:grid-rows-2 grid-cols-2  h-full p-4 gap-4 md:gap-12">
-            {statusBarStatus === "success" && (
+          <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
+            {statusBarStatus === "idle" && (
               <>
                 <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
-                  <Pdf className=" w-24  h-24 lg:w-36 lg:h-36" />
+                  <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36 " />
                 </div>
-                <div className="h-full flex flex-col w-full md:justify-start justify-center items-center">
+                <div className="h-full flex flex-col w-3/4 md:w-full  items-center md:justify-start justify-center  gap-2 md:gap-4 ">
                   <a
-                    className="cursor pointer flex p-4  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]   px-8 rounded-xl text-center gap-2 font-bold text-sm"
-                    href={downloadUrl}
-                    download={
-                      file?.name.replace(/\.[^/.]+$/, ".pdf") || "archivo.pdf"
+                    className="cursor pointer flex p-5  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]   px-8 rounded-xl text-center gap-2 font-bold text-sm"
+                    onClick={() =>
+                      downloadAs(file?.name.replace(/\.[^/.]+$/, ".pdf"))
                     }
                   >
                     <Download />
-                    <span className="text-xs md:text-center  flex truncate">
+                    <span className="w-3/4 flex truncate">
                       {file?.name.replace(/\.[^/.]+$/, ".pdf")}
                     </span>
                   </a>

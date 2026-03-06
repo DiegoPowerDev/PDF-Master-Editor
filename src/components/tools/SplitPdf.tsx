@@ -55,18 +55,15 @@ export default function SplitPdf() {
     <div className=" w-full 2xl:w-3/4 flex flex-col items-center justify-center">
       {file ? (
         <div className="h-full w-full grid grid-cols-1 grid-rows-3 md:grid-rows-1 md:grid-cols-3 gap-2 items-center justify-center ">
-          <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
+          <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-between md:justify-center h-full p-4  md:gap-12">
             <div className="md:w-full h-full flex flex-col justify-center gap-4 md:justify-end items-center  text-4xl">
-              <Pdf className=" w-24 h-24 lg:w-36 lg:h-36" />
-              <div className="text-gray-700 text-sm  ">
-                {formatSize(file.size)}
-              </div>
+              <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36 " />
             </div>
-            <div className="h-full flex flex-col w-1/2 md:w-full  items-center justify-start gap-2 md:gap-4  ">
-              <div className="w-3/4 min-w-0 cursor pointer  flex md:justify-center md:min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80] md:px-8 md:py-4 p-4 rounded-xl text-center gap-2 font-bold text-sm">
-                <p className="text-xs md:text-center  flex  truncate">
+            <div className="h-full flex flex-col w-2/3 md:w-full  items-center justify-start gap-2 md:gap-4  ">
+              <div className="w-full md:w-3/4 min-w-0 cursor pointer  flex md:justify-center md:min-w-1/2 max-w-full relative items-center text-black bg-[#E9FF4B80] md:px-8 md:py-5 p-4 rounded-xl text-center gap-2 font-bold text-sm">
+                <div className="w-full flex  text-wrap line-clamp-2  ">
                   {file.name}
-                </p>
+                </div>
 
                 <button
                   className="absolute top-2 right-2 text-red-800"
@@ -162,19 +159,19 @@ export default function SplitPdf() {
 
           {/* Columna derecha */}
           <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
-            {statusBarStatus === "success" && downloadUrl && (
+            {statusBarStatus === "success" && (
               <>
                 <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
-                  <Pdf className=" w-24 h-24 lg:w-36 lg:h-36" />
+                  <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36 " />
                 </div>
-                <div className="h-full flex flex-col w-full md:justify-start justify-center items-center">
+                <div className="h-full flex flex-col w-3/4 md:w-full  items-center md:justify-start justify-center  gap-2 md:gap-4 ">
                   <button
-                    className="cursor-pointer flex p-4 justify-center min-w-1/2 max-w-full items-center text-black bg-[#4ade80] px-8 rounded-xl text-center gap-2 font-bold text-sm"
+                    className="cursor-pointer flex p-5  justify-center min-w-1/2 max-w-full  items-center text-black bg-[#4ade80]  rounded-xl text-center gap-2 font-bold text-sm"
                     onClick={() => downloadAs(getDownloadName())}
                   >
                     <Download />
-                    <span className="text-wrap">
-                      Descargar: {getDownloadName()}
+                    <span className="w-3/4 flex truncate">
+                      {getDownloadName()}
                     </span>
                   </button>
                 </div>
