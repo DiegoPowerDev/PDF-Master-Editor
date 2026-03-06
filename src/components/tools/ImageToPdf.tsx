@@ -99,7 +99,7 @@ export default function ImageToPdf() {
             )}
           </div>
           <div className="border rounded-xl md:border-0 md:grid md:grid-cols-1 md:grid-rows-2 flex items-center justify-center h-full p-4 gap-4 md:gap-12">
-            {statusBarStatus === "idle" && (
+            {statusBarStatus === "success" && (
               <>
                 <div className="md:w-full h-full flex justify-center items-center md:items-end text-4xl">
                   <Pdf className="w-16 h-16 md:w-24 md:h-24 lg:w-36 lg:h-36 " />
